@@ -43,20 +43,20 @@ export default function CancelBooking() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto w-full min-w-0">
       <h1 className="text-2xl font-bold text-slate-800 mb-1">Manage Your Booking</h1>
       <p className="text-slate-500 mb-6 text-sm">
         Enter your Booking ID (e.g. BK-000001) and the email you booked with.
       </p>
 
-      <form onSubmit={handleLookup} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+      <form onSubmit={handleLookup} className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm space-y-4">
         <label className="block">
           <span className="text-sm font-medium text-slate-700">Booking ID</span>
           <input
             value={bookingId}
             onChange={(e) => setBookingId(e.target.value)}
             placeholder="BK-000001"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+            className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
           />
         </label>
         <label className="block">
@@ -66,7 +66,7 @@ export default function CancelBooking() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="jane@example.com"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+            className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
           />
         </label>
         <button
@@ -79,7 +79,7 @@ export default function CancelBooking() {
       </form>
 
       {booking && (
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mt-6 text-sm space-y-2">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm mt-6 text-sm space-y-2">
           <Row label="Booking ID" value={booking.code} strong />
           <Row label="Service" value={booking.service_name} />
           <Row label="Date" value={format(new Date(booking.date + 'T00:00:00'), 'EEEE, MMM d, yyyy')} />
@@ -115,12 +115,12 @@ export default function CancelBooking() {
 
 function Row({ label, value, strong, capitalize, badgeColor }) {
   return (
-    <div className="flex justify-between items-center">
-      <span className="text-slate-500">{label}</span>
+    <div className="flex justify-between items-center gap-3 min-w-0">
+      <span className="text-slate-500 flex-shrink-0">{label}</span>
       {badgeColor ? (
         <span className={`px-2 py-0.5 rounded-full text-xs font-medium capitalize ${badgeColor}`}>{value}</span>
       ) : (
-        <span className={`${strong ? 'font-semibold text-slate-800' : 'text-slate-700'} ${capitalize ? 'capitalize' : ''}`}>
+        <span className={`${strong ? 'font-semibold text-slate-800' : 'text-slate-700'} ${capitalize ? 'capitalize' : ''} text-right break-words min-w-0`}>
           {value}
         </span>
       )}

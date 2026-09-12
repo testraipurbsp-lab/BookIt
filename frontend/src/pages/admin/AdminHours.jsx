@@ -40,8 +40,8 @@ export default function AdminHours() {
   if (loading) return <p className="text-slate-500 text-sm">Loading…</p>;
 
   return (
-    <div className="max-w-2xl">
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mb-6">
+    <div className="max-w-2xl w-full min-w-0">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm mb-6">
         <h3 className="font-semibold text-slate-800 mb-1">Slot Duration</h3>
         <p className="text-sm text-slate-500 mb-3">
           How often new booking slots start (e.g. every 30 minutes).
@@ -49,7 +49,7 @@ export default function AdminHours() {
         <select
           value={slotDuration}
           onChange={(e) => setSlotDuration(e.target.value)}
-          className="border border-slate-200 rounded-lg px-3 py-2 text-sm"
+          className="border border-slate-200 rounded-lg px-3 py-2 text-sm max-w-full"
         >
           <option value={15}>15 minutes</option>
           <option value={30}>30 minutes</option>
@@ -57,12 +57,12 @@ export default function AdminHours() {
         </select>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm">
         <h3 className="font-semibold text-slate-800 mb-4">Working Hours</h3>
         <div className="space-y-3">
           {hours.map((h) => (
-            <div key={h.day_of_week} className="flex items-center gap-3 flex-wrap">
-              <label className="flex items-center gap-2 w-32 shrink-0">
+            <div key={h.day_of_week} className="flex items-center gap-3 flex-wrap min-w-0">
+              <label className="flex items-center gap-2 w-full sm:w-32 shrink-0">
                 <input
                   type="checkbox"
                   checked={!!h.is_open}
@@ -73,19 +73,19 @@ export default function AdminHours() {
               </label>
 
               {h.is_open ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full sm:w-auto min-w-0">
                   <input
                     type="time"
                     value={h.start_time}
                     onChange={(e) => updateDay(h.day_of_week, { start_time: e.target.value })}
-                    className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm"
+                    className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm flex-1 sm:flex-none min-w-0"
                   />
-                  <span className="text-slate-400 text-sm">to</span>
+                  <span className="text-slate-400 text-sm shrink-0">to</span>
                   <input
                     type="time"
                     value={h.end_time}
                     onChange={(e) => updateDay(h.day_of_week, { end_time: e.target.value })}
-                    className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm"
+                    className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm flex-1 sm:flex-none min-w-0"
                   />
                 </div>
               ) : (
@@ -98,7 +98,7 @@ export default function AdminHours() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="mt-6 bg-brand-500 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl hover:bg-brand-600"
+          className="mt-6 bg-brand-500 disabled:opacity-60 text-white font-medium px-5 py-2.5 rounded-xl hover:bg-brand-600 w-full sm:w-auto"
         >
           {saving ? 'Saving…' : 'Save Changes'}
         </button>

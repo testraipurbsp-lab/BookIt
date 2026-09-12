@@ -51,38 +51,38 @@ export default function MonthCalendar({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-soft border border-slate-200/70 p-5 w-full">
+    <div className="bg-white rounded-2xl shadow-soft border border-slate-200/70 p-3 sm:p-5 w-full min-w-0">
       <div className="flex items-center justify-between mb-4">
         <button
           type="button"
           onClick={goPrevMonth}
-          className="h-8 w-8 flex items-center justify-center rounded-full hover:bg-brand-50 hover:text-brand-600 text-slate-500 transition-colors"
+          className="h-8 w-8 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-brand-50 hover:text-brand-600 text-slate-500 transition-colors"
           aria-label="Previous month"
         >
           ‹
         </button>
-        <h3 className="font-display font-semibold text-slate-800 tracking-tight">
+        <h3 className="font-display font-semibold text-slate-800 tracking-tight text-sm sm:text-base text-center min-w-0 px-2">
           {format(viewMonth, 'MMMM yyyy')}
         </h3>
         <button
           type="button"
           onClick={goNextMonth}
-          className="h-8 w-8 flex items-center justify-center rounded-full hover:bg-brand-50 hover:text-brand-600 text-slate-500 transition-colors"
+          className="h-8 w-8 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-brand-50 hover:text-brand-600 text-slate-500 transition-colors"
           aria-label="Next month"
         >
           ›
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 mb-1">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1 mb-1">
         {WEEKDAYS.map((w) => (
-          <div key={w} className="text-center text-[11px] font-semibold uppercase tracking-wide text-slate-400 py-1">
+          <div key={w} className="text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-wide text-slate-400 py-1">
             {w}
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
         {days.map((day) => {
           const dateKey = format(day, 'yyyy-MM-dd');
           const inMonth = isSameMonth(day, viewMonth);
@@ -94,7 +94,7 @@ export default function MonthCalendar({
           const disabled = isPast || status === 'full' || status === 'closed';
 
           let classes =
-            'aspect-square flex items-center justify-center rounded-xl text-sm relative transition-all duration-150 ';
+            'aspect-square flex items-center justify-center rounded-xl text-xs sm:text-sm relative transition-all duration-150 min-w-0 ';
           if (!inMonth) classes += 'text-slate-300 ';
           else if (disabled) classes += 'text-slate-300 cursor-not-allowed line-through ';
           else classes += 'text-slate-700 font-medium cursor-pointer hover:bg-brand-50 hover:text-brand-700 ';
@@ -130,7 +130,7 @@ export default function MonthCalendar({
         })}
       </div>
 
-      <div className="flex items-center gap-4 mt-4 pt-4 border-t border-slate-100 text-xs text-slate-500">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 pt-4 border-t border-slate-100 text-xs text-slate-500">
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Available
         </span>

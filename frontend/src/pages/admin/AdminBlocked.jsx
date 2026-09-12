@@ -57,15 +57,15 @@ export default function AdminBlocked() {
   };
 
   return (
-    <div className="grid lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2">
+    <div className="grid lg:grid-cols-3 gap-6 min-w-0">
+      <div className="lg:col-span-2 min-w-0">
         {loading ? (
           <p className="text-slate-500 text-sm">Loading…</p>
         ) : items.length === 0 ? (
           <p className="text-slate-500 text-sm">No blocked dates or times yet.</p>
         ) : (
-          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-            <table className="w-full text-sm">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-x-auto shadow-sm">
+            <table className="w-full min-w-[640px] text-sm">
               <thead className="bg-slate-50 text-slate-500 text-left">
                 <tr>
                   <th className="px-4 py-3 font-medium">Date</th>
@@ -77,16 +77,18 @@ export default function AdminBlocked() {
               <tbody className="divide-y divide-slate-100">
                 {items.map((b) => (
                   <tr key={b.id}>
-                    <td className="px-4 py-3 text-slate-800">
+                    <td className="px-4 py-3 text-slate-800 whitespace-nowrap">
                       {format(new Date(b.date + 'T00:00:00'), 'MMM d, yyyy')}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
                       {b.start_time === '00:00' && b.end_time === '23:59'
                         ? 'Full day'
                         : `${b.start_time} – ${b.end_time}`}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{b.reason || '—'}</td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-4 py-3 text-slate-600">
+                      {b.reason || '—'}
+                    </td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
                       <button
                         onClick={() => handleDelete(b.id)}
                         className="text-xs px-2 py-1 rounded-md border border-red-200 text-red-600 hover:bg-red-50"
@@ -102,8 +104,8 @@ export default function AdminBlocked() {
         )}
       </div>
 
-      <div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm sticky top-20">
+      <div className="min-w-0">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm sticky top-20">
           <h3 className="font-semibold text-slate-800 mb-4">Block a Date / Time</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <label className="block">
@@ -112,7 +114,7 @@ export default function AdminBlocked() {
                 type="date"
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               />
             </label>
 
@@ -127,19 +129,19 @@ export default function AdminBlocked() {
             </label>
 
             {!form.fullDay && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <input
                   type="time"
                   value={form.start_time}
                   onChange={(e) => setForm({ ...form, start_time: e.target.value })}
-                  className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm flex-1"
+                  className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm flex-1 min-w-0"
                 />
-                <span className="text-slate-400 text-sm">to</span>
+                <span className="text-slate-400 text-sm flex-shrink-0">to</span>
                 <input
                   type="time"
                   value={form.end_time}
                   onChange={(e) => setForm({ ...form, end_time: e.target.value })}
-                  className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm flex-1"
+                  className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm flex-1 min-w-0"
                 />
               </div>
             )}
@@ -150,7 +152,7 @@ export default function AdminBlocked() {
                 value={form.reason}
                 onChange={(e) => setForm({ ...form, reason: e.target.value })}
                 placeholder="e.g. Public holiday"
-                className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               />
             </label>
 

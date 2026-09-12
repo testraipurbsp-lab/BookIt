@@ -84,13 +84,13 @@ export default function AdminServices() {
   };
 
   return (
-    <div className="grid lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2">
+    <div className="grid lg:grid-cols-3 gap-6 min-w-0">
+      <div className="lg:col-span-2 min-w-0">
         {loading ? (
           <p className="text-slate-500 text-sm">Loading services…</p>
         ) : (
-          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-            <table className="w-full text-sm">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-x-auto shadow-sm">
+            <table className="w-full min-w-[600px] text-sm">
               <thead className="bg-slate-50 text-slate-500 text-left">
                 <tr>
                   <th className="px-4 py-3 font-medium">Name</th>
@@ -103,10 +103,10 @@ export default function AdminServices() {
               <tbody className="divide-y divide-slate-100">
                 {services.map((s) => (
                   <tr key={s.id}>
-                    <td className="px-4 py-3 font-medium text-slate-800">{s.name}</td>
-                    <td className="px-4 py-3 text-slate-600">{s.duration_minutes} min</td>
-                    <td className="px-4 py-3 text-slate-600">${Number(s.price).toFixed(2)}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 font-medium text-slate-800 whitespace-nowrap">{s.name}</td>
+                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{s.duration_minutes} min</td>
+                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">${Number(s.price).toFixed(2)}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <button
                         onClick={() => handleToggleActive(s)}
                         className={`px-2 py-0.5 rounded-full text-xs font-medium ${
@@ -117,7 +117,7 @@ export default function AdminServices() {
                       </button>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex justify-end gap-2">
+                      <div className="flex justify-end gap-2 whitespace-nowrap">
                         <button
                           onClick={() => startEdit(s)}
                           className="text-xs px-2 py-1 rounded-md border border-slate-200 text-slate-600 hover:bg-slate-50"
@@ -147,8 +147,8 @@ export default function AdminServices() {
         )}
       </div>
 
-      <div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm sticky top-20">
+      <div className="min-w-0">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm sticky top-20">
           <h3 className="font-semibold text-slate-800 mb-4">{editingId ? 'Edit Service' : 'Add Service'}</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <label className="block">
@@ -156,7 +156,7 @@ export default function AdminServices() {
               <input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
                 placeholder="e.g. Haircut"
               />
             </label>
@@ -168,7 +168,7 @@ export default function AdminServices() {
                 step="5"
                 value={form.duration_minutes}
                 onChange={(e) => setForm({ ...form, duration_minutes: e.target.value })}
-                className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               />
             </label>
             <label className="block">
@@ -179,7 +179,7 @@ export default function AdminServices() {
                 step="0.01"
                 value={form.price}
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
-                className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="mt-1 w-full min-w-0 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               />
             </label>
 

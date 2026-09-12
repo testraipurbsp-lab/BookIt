@@ -67,7 +67,7 @@ export default function AdminBookings() {
   };
 
   return (
-    <div>
+    <div className="min-w-0">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-2">
           <ToggleButton active={view === 'list'} onClick={() => setView('list')}>
@@ -78,7 +78,7 @@ export default function AdminBookings() {
           </ToggleButton>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 max-w-full">
           {selectedDate && (
             <button
               onClick={() => setSelectedDate(null)}
@@ -90,7 +90,7 @@ export default function AdminBookings() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-sm border border-slate-200 rounded-lg px-2 py-1.5"
+            className="text-sm border border-slate-200 rounded-lg px-2 py-1.5 max-w-full"
           >
             <option value="all">All statuses</option>
             <option value="confirmed">Confirmed</option>
@@ -101,7 +101,7 @@ export default function AdminBookings() {
       </div>
 
       {view === 'calendar' && (
-        <div className="mb-6">
+        <div className="mb-6 max-w-full">
           <AdminMiniCalendar
             viewMonth={viewMonth}
             onMonthChange={setViewMonth}
@@ -117,8 +117,8 @@ export default function AdminBookings() {
       ) : filtered.length === 0 ? (
         <p className="text-slate-500 text-sm">No bookings found for this filter.</p>
       ) : (
-        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-          <table className="w-full text-sm">
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-x-auto shadow-sm max-w-full">
+          <table className="w-full min-w-[900px] text-sm">
             <thead className="bg-slate-50 text-slate-500 text-left">
               <tr>
                 <th className="px-4 py-3 font-medium">ID</th>
@@ -133,23 +133,25 @@ export default function AdminBookings() {
             <tbody className="divide-y divide-slate-100">
               {filtered.map((b) => (
                 <tr key={b.id}>
-                  <td className="px-4 py-3 font-medium text-slate-700">{b.code}</td>
+                  <td className="px-4 py-3 font-medium text-slate-700 whitespace-nowrap">{b.code}</td>
                   <td className="px-4 py-3">
-                    <div className="text-slate-800">{b.customer_name}</div>
+                    <div className="text-slate-800 whitespace-nowrap">{b.customer_name}</div>
                     <div className="text-xs text-slate-400">{b.email}</div>
                   </td>
-                  <td className="px-4 py-3 text-slate-600">{b.service_name}</td>
-                  <td className="px-4 py-3 text-slate-600">{format(new Date(b.date + 'T00:00:00'), 'MMM d, yyyy')}</td>
-                  <td className="px-4 py-3 text-slate-600">
+                  <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{b.service_name}</td>
+                  <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
+                    {format(new Date(b.date + 'T00:00:00'), 'MMM d, yyyy')}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
                     {b.start_time}–{b.end_time}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium capitalize ${STATUS_STYLES[b.status]}`}>
                       {b.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="flex justify-end gap-1">
+                    <div className="flex justify-end gap-1 whitespace-nowrap">
                       {b.status !== 'confirmed' && (
                         <ActionBtn onClick={() => handleStatusChange(b.id, 'confirmed')}>Confirm</ActionBtn>
                       )}
@@ -222,24 +224,26 @@ function AdminMiniCalendar({ viewMonth, onMonthChange, countsByDate, selectedDat
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 max-w-md">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-4 max-w-md w-full min-w-0">
       <div className="flex items-center justify-between mb-4">
-        <button onClick={goPrev} className="h-8 w-8 rounded-full hover:bg-slate-100">
+        <button onClick={goPrev} className="h-8 w-8 flex-shrink-0 rounded-full hover:bg-slate-100">
           ‹
         </button>
-        <h3 className="font-semibold text-slate-800">{format(viewMonth, 'MMMM yyyy')}</h3>
-        <button onClick={goNext} className="h-8 w-8 rounded-full hover:bg-slate-100">
+        <h3 className="font-semibold text-slate-800 text-sm sm:text-base text-center px-2">
+          {format(viewMonth, 'MMMM yyyy')}
+        </h3>
+        <button onClick={goNext} className="h-8 w-8 flex-shrink-0 rounded-full hover:bg-slate-100">
           ›
         </button>
       </div>
-      <div className="grid grid-cols-7 gap-1 mb-1">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1 mb-1">
         {WEEKDAYS.map((w) => (
-          <div key={w} className="text-center text-xs font-medium text-slate-400 py-1">
+          <div key={w} className="text-center text-[10px] sm:text-xs font-medium text-slate-400 py-1">
             {w}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
         {days.map((day) => {
           const key = format(day, 'yyyy-MM-dd');
           const inMonth = isSameMonth(day, viewMonth);
@@ -249,14 +253,14 @@ function AdminMiniCalendar({ viewMonth, onMonthChange, countsByDate, selectedDat
             <button
               key={key}
               onClick={() => onSelectDate(day)}
-              className={`aspect-square flex flex-col items-center justify-center rounded-lg text-sm relative ${
+              className={`aspect-square flex flex-col items-center justify-center rounded-lg text-xs sm:text-sm relative min-w-0 ${
                 !inMonth ? 'text-slate-300' : 'text-slate-700 hover:bg-slate-50'
               } ${isSelected ? '!bg-brand-500 !text-white font-semibold' : ''}`}
             >
               {format(day, 'd')}
               {count > 0 && inMonth && (
                 <span
-                  className={`text-[9px] mt-0.5 ${isSelected ? 'text-white' : 'text-brand-600'}`}
+                  className={`text-[8px] sm:text-[9px] mt-0.5 ${isSelected ? 'text-white' : 'text-brand-600'}`}
                 >
                   {count} booked
                 </span>
